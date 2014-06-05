@@ -24,6 +24,7 @@ void setup() {
   pinMode(19, INPUT_PULLUP);
   pinMode(20, INPUT_PULLUP);
   pinMode(21, INPUT_PULLUP);
+  delay(500);
 }
 
 void loop() {
@@ -54,6 +55,21 @@ void processFallingEdges() {
     Keyboard.set_key6(0);
     Keyboard.send_now();
     delay(500);
+  }
+  
+  if ((bSelect.read() == LOW) && (bDown.read() == LOW)) {
+    Keyboard.set_key1(KEY_ESC);
+    Keyboard.set_key2(0);
+    Keyboard.set_key3(0);
+    Keyboard.set_key4(0);
+    Keyboard.set_key5(0);
+    Keyboard.set_key6(0);
+    Keyboard.send_now();
+    delay(100);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+    delay(500);
+    return;
   }
   
   if (hidMode == 0) {
@@ -167,7 +183,7 @@ void processRisingEdges() {
   }
   
   if (hidMode == 1) {
-    if (bA.risingEdge()) {
+     if (bA.risingEdge()) {
       mLeft = false;
       Mouse.set_buttons(mLeft, false, mRight);
     }
